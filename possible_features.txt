@@ -1,0 +1,8 @@
+User can search for jobs by location
+User can search for jobs by type
+User can search for jobs by salary
+User can search for jobs that include moving benefits
+User can search by experience/education required
+User can create an account
+User can search by location on a map (ala Yelp)
+User can upload a resume
