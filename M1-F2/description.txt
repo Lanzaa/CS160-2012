@@ -1,0 +1,23 @@
+The basic idea is to allow the user to manipulate a map in order to choose an area in which to do searches.  This feature is implemented on yelp.com, a restaurant rating site.  The user is able to check a box saying they wish to use the map as the search area.  After this point, the user can move the map around by click-and-dragging it, or zoom in and out of the map.  The default location of the map can be calculated either by the location given by the user, or by using geoip to determine the users location.
+
+This feature falls under the domain requirement c3, being an additional feature that is not implemented on any of the base sites.  This feature is innovative in that it allows a user to do a search by geographic area, which would allow them both to search a bunch of neighboring cities at once, and map out their expected commute at a glance.
+
+Using google maps, this feature is entirely feasable, as we can pick a location to display based on zip code, city, state, or gps coordinates.  We can also query for size of the map, as well as distance from the center of the map, in order to restrict the results to what can be displayed on the map.  We can then take this information and parse it into our search queries to both dice and monster, along with any other search parameters the user has picked via the following analysis.
+
+
+For dice.com, a simple search specifying only zip code and range would be:
+
+http://seeker.dice.com/jobsearch/servlet/JobSearch?caller=0&LOCATION_OPTION=2&EXTRA_STUFF=0&N=0&Hf=0&Ntk=JobSearchRanking&op=300&values=&FREE_TEXT=&Ntx=mode+matchall&EXCLUDE_KEY1=p_JobTitle&EXCLUDE_TEXT1=&EXCLUDE_KEY2=p_JobTitle&EXCLUDE_TEXT2=&EXCLUDE_KEY3=p_JobTitle&EXCLUDE_TEXT3=&EXCLUDE_KEY4=p_JobTitle&EXCLUDE_TEXT4=&EXCLUDE_KEY5=p_JobTitle&EXCLUDE_TEXT5=&EXCLUDE_KEY6=p_JobTitle&EXCLUDE_TEXT6=&EXCLUDE_KEY7=p_JobTitle&EXCLUDE_TEXT7=&EXCLUDE_KEY8=p_JobTitle&EXCLUDE_TEXT8=&locationRadio=on&RADIUS=16.09344&WHERE=95120&WHEREList=95120&COUNTRY=1525&STAT_PROV=0&METRO_AREA=33.78715899%2C-84.39164034&AREA_CODES=&AC_COUNTRY=1525&TRAVEL=0&TAXTERM=0&SORTSPEC=0&FRMT=0&DAYSBACK=30&NUM_PER_PAGE=30
+
+&locationRadio=on&RADIUS=16.09344&WHERE=95120&WHEREList=95120
+RADIUS is the range in kilometers.
+WHERE is the zip code.
+
+
+For monster.com, a simple search specifying only zip code and range would be:
+
+http://jobsearch.monster.com/search/California+Silicon-Valley__2fSan-Jose_12?where=95122__2c-San-Jose__2c-CA&rad=200
+
+?where=95122__2c-San-Jose__2c-CA&rad=200
+where is the zip code.
+rad is the range in miles.
