@@ -1,0 +1,55 @@
+.search {
+   border: 2px solid black;
+   border-radius: 5px;
+   cursor: default;
+   display: block;
+   font-family:arial,helvetica,sans-serif;
+   font-size: 14px;
+   left: 10px;
+   padding: 10px;
+   position: absolute;
+   text-align: justify;
+   top: 10px;
+   width: 200px;
+   z-index: 1;
+}
+
+.label {
+   font-size: 16;
+   font-weight: 200;
+   padding: 10px 0px 5px 0px;
+}
+
+.label:after { content: ": " }
+
+.title {
+   font-size: 20px;
+   font-weight: 600;
+   text-align: center;
+   padding: 10px, 10px, 5px, 10px;
+}
+
+input[type=text] {
+   float: right;
+   width: 90%;
+}
+
+.submit {
+   text-align: center;
+}
+
+.results {
+   border: 2px solid black;
+   border-radius: 5px;
+   cursor: default;
+   display: block;
+   font-family:arial,helvetica,sans-serif;
+   font-size: 14px;
+   height: 75%;
+   left: 250px;
+   padding: 10px;
+   position: absolute;
+   text-align: justify;
+   top: 10px;
+   width: 75%;
+   z-index: 1;}
