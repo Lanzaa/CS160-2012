@@ -15,6 +15,7 @@
       google.maps.event.addListener(autocomplete, 'place_changed', function() {
         map.setCenter(autocomplete.getPlace().geometry.location);
       });
+      updateMap(document.getElementsByName('location')[0].value);
     }
 
     // load the google maps api for use, run via window.onload after website is done loading.
@@ -62,6 +63,9 @@
 	</div>
 		<div class="results">
                 <div id="map_canvas" style="width: 600px; height: 500px"></div>
-		</div>
+	</div>
+	<div class="wut">
+		<a href="salary.php">Salary Search</a>
+	</div>
         </body>
 </html>

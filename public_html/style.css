@@ -53,3 +53,9 @@ input[type=text] {
    top: 10px;
    width: 75%;
    z-index: 1;}
+
+.wut {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+}
