@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Google Maps JavaScript API v3 Example: Asynchronous Map Simple</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script>
+      var map;
+      var geocoder;
+      function initialize() {
+        var mapOptions = {
+          zoom: 13,
+          center: new google.maps.LatLng(0, 0),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'center_changed', function() {
+          updateLocation();
+        });
+      }
+
+      function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?&sensor=false&callback=initialize';
+        document.body.appendChild(script);
+      }
+
+      function updateMap(location) {
+        if (location != "") {
+          geocoder.geocode({ 'address': location }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              map.setCenter(results[0].geometry.location);
+            }
+          });
+        }
+      }
+
+      function updateLocation() {
+        var input = document.getElementsByName("location")[0]
+      }
+
+      window.onload = loadScript;
+    </script>
+  </head>
+  <body>
+    <form onsubmit="updateMap(document.getElementsByName('location')[0].value);return false" method="get">
+		Location: <input id="location" type="text" name="location">
+                <input type="submit" value="Search">
+    </form>
+    <div id="map_canvas" style="width:500px; height:500px"></div>
+  </body>
+</html>
+
