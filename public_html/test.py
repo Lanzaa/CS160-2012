@@ -1,8 +1,12 @@
+#!/usr/bin/python
 import httplib
 import urllib
 import urllib2
 import re
 import sys
+
+print "Content-Type: text/html"
+print 
 
 def searchMonsterForSalary(min_salary):
 
@@ -41,6 +45,7 @@ if(len(sys.argv) >= 2):
 	for result in results:
 		print result
 
+print "Hello"
 
 
 #print "Hello World"
