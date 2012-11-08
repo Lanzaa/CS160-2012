@@ -1,0 +1,2 @@
+Improvements to make for Function 2
+- Integrate with other functions to provide the map with location input.

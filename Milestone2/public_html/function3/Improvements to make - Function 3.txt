@@ -1,0 +1,3 @@
+Improvements to make for Function 3
+- Adjust output for use with HTML
+- Adjust to use a centralized scraper instead of its own
