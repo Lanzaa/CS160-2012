@@ -45,7 +45,7 @@ input[type=text] {
    display: block;
    font-family:arial,helvetica,sans-serif;
    font-size: 14px;
-   height: 75%;
+   min-height: 75%;
    left: 250px;
    padding: 10px;
    position: absolute;
