@@ -8,10 +8,12 @@ import sys
 print "Content-Type: text/html"
 print 
 
-def searchMonsterForSalary(location):
+def searchMonsterForLocation(location):
 	conn = httplib.HTTPConnection('jobsearch.monster.com')
 		
 	params = {'where' : location}
+	
+	print location
 		
 	conn.request('GET','/search/?' + urllib.urlencode(params))
 	urlStr = 'jobsearch.monster.com' + '/search/?' + urllib.urlencode(params) + '\n\n'
@@ -19,7 +21,7 @@ def searchMonsterForSalary(location):
 	response = conn.getresponse().read()
 	response = urllib.unquote_plus( response )
 	lines = response.split('\n')
-	result = ""
+	resultDict = {}
 	results = []
 	results.append(urlStr)
 	for line in lines:
@@ -42,8 +44,15 @@ def searchMonsterForSalary(location):
 	
 
 if(len(sys.argv) >= 2):
-	results = searchMonsterForSalary(sys.argv[1])
+	# concat input into a string
+	input = sys.argv[1]
+	for i in range(len(sys.argv)):
+		if i > 1:
+			input += " " + sys.argv[i]
+	# print input
+	
+	results = searchMonsterForLocation(input)
 	for result in results:
 		print result
 
-print "Hello"
+# print "Hello"
