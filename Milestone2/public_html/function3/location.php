@@ -4,10 +4,12 @@
       <link href="style.css" rel="stylesheet">
 </head>
 <body>
+<div class="search">
    <form action="location.php" method="get">
       Location: <input type="text" name="location" value="<?php echo $_GET["location"] ?>"><br>
       <input type="submit" value="Search">
    </form>
+</div>
 
    <div class="results">
 <?php

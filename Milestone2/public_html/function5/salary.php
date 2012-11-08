@@ -4,11 +4,13 @@
       <link href="style.css" rel="stylesheet">
 </head>
 <body>
+<div class="search">
    <form action="salary.php" method="get">
       Salary: <input type="text" name="salary" value="<?php echo $_GET["salary"] ?>"><br>
       <input type="submit" value="Search">
    </form>
 
+</div>
    <div class="results">
 <?php
    if(is_numeric($_GET["salary"])){
