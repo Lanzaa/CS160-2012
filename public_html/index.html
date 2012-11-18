@@ -6,13 +6,23 @@
       <div class="search">
          <div class="title">Search Parameters</div>
          <form action="results.php" method="get">
-            <div class="label">Location</div>
-            <input type="text" name="location"><br/>
-            <div class="label">Keyword</div>
-            <input type="text" name="keyword"><br/><br/>
-            <div class="submit">
-               <input type="submit" value="Search">
-            </div>
+            <ul>
+               <li class="label">Location:
+                  <input type="text" name="location">
+               </li>
+               <li class="label">Keyword:
+                  <input type="text" name="keyword">
+               </li>
+               <li class="label">Salary:
+                  <input type="text" name="salary">
+               </li>
+               <li class="label">Education:
+                  <input type="text" name="education">
+               </li>
+               <li class="submit">
+                  <input type="submit" value="Search">
+               </li>
+            </ul>
          </form>
       </div>
       <div class="results">
@@ -20,4 +30,3 @@
       </div>
    </body>
 </html>
-
