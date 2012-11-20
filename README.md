@@ -11,6 +11,7 @@ We are going to use a json format for our job listings. The data will contain th
 
 * title: string, the title of the job
 * company: string, the name of the company the job posting is for
+* city: string, the name of the city the job is in
 * salary: int, the salary for the job, $USD/year
 * requirements: string, the requirements for the job as a string
 * link: string, the url of the job posting
