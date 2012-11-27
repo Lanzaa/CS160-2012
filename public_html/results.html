@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body id="div-my-tabl">
+	<h2 id="title">Job Mashup</h2>
+	<div id="div-my-tabl"></div>
+	<script>
+	$("document").ready(function() {
+	    $.getJSON("./results/results.json", function(data) {
+	        $("#div-my-table").text("<table>");
+	        $.each(data, function(i, item) {
+				$("#div-my-tabl").append("<tr>");
+				$("#div-my-tabl").append("<td>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append(item.title);
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append(item.company);
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append(item.city);
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append(item.salary);
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append(item.requirements);
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("</td>");
+	            $("#div-my-tabl").append("</tr>");
+				$("#div-my-tabl").append("<br />");
+				$("#div-my-tabl").append("<br />");
+				// $("#div-my-tabl").append("<br />");
+			
+	        });
+		
+	        $("#div-my-table").append("</table>");
+
+	    });
+	});
+	</script>
+	<a href="./index.html"> Try other inputs </a>
+	<br><br>
+</body>
+</html>
