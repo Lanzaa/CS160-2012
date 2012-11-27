@@ -1,5 +1,5 @@
 #!/usr/bin/python2
 from wsgiref.handlers import CGIHandler
-from test import app
+from scrapper import app
 
 CGIHandler().run(app)
