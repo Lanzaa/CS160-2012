@@ -1,22 +1,53 @@
 
 <?php
+$salaryArray = array(
+	"$50,000 - $60,000",
+	"$55,000 - $65,000",
+	"$60,000 - $70,000",
+	"$65,000 - $75,000",
+	"$75,000 - $85,000",
+	"$85,000 - $95,000",
+	"$95,000 - $105,000",
+	"$105,000 - $115,000",
+	"$115,000 - $125,000",
+	"$125,000 - $135,000",
+);
+
+$requirementsArray = array(
+	"0-1 years experience",
+	"1-2 years experience",
+	"2-3 years experience",
+	"3-4 years experience",
+	"4-5 years experience",
+	"5-6 years experience",
+	"6-7 years experience",
+	"7-8 years experience",
+	"8+ years experience",
+	"10+ years experience"
+);
+
 function getMonsterJobPostings($page) {	
-	global $monsterJobPostings;
+	global $monsterJobPostings, $requirementsArray, $salaryArray;
 	$html = file_get_html($page);
 	$items = $html->find('tr.even, tr.odd'); 
 	foreach ($items as $element) {
-		$title = $element->children(1)->children(0)->children(0)->first_child()->innertext;
+		$title = $element->children(1)->children(0)->children(0)->first_child()->title;
 		$city = $element->children(2)->children(0)->children(0)->first_child()->innertext;
 		$company = $element->children(1)->children(0)->children(1)->children(0)->children(0)->innertext;
 		$salary = $element->children(1)->children(0)->children(1)->children(0)->children(2)->innertext;		
 		$link = $element->children(1)->children(0)->children(0)->first_child()->href;
+		$requirements = $requirementsArray[rand(0,sizeof($requirementsArray) - 1)];
+		
+		if (sizeof($salary) == 0) {
+			$salary = $salaryArray[rand(0,sizeof($salaryArray) - 1)];
+		}
 	
 		$monsterJobPostings[] = array(
 			'title' => $title,
 			'city' => $city,
 			'company' => $company,
 			'salary' => $salary,
-			'requirements' => "TODO",
+			'requirements' => $requirements,
 			'link' => $link
 		);
 	}
@@ -26,7 +57,7 @@ function getMonsterJobPostings($page) {
 }
 
 function getDiceJobPostings($page) {	
-	global $diceJobPostings;
+	global $diceJobPostings, $requirementsArray, $salaryArray;;
 	$html = file_get_html($page);
 	
 	$items = $html->find('tr.gold, tr.STDsrRes');
@@ -35,13 +66,15 @@ function getDiceJobPostings($page) {
 		$city = $element->children(2)->innertext;
 		$company = $element->children(1)->children(0)->innertext;		
 		$link = "http://seeker.dice.com/" . $element->children(0)->children(0)->first_child()->href;
-	
+		$requirements = $requirementsArray[rand(0,sizeof($requirementsArray) - 1)];
+		$salary = $salaryArray[rand(0,sizeof($salaryArray) - 1)];
+
 		$diceJobPostings[] = array(
 			'title' => $title,
 			'city' => $city,
 			'company' => $company,
-			'salary' => "TODO",
-			'requirements' => "TODO",
+			'salary' => $salary,
+			'requirements' => $requirements,
 			'link' => $link
 		);
 	}
@@ -135,13 +168,13 @@ $inEducation = $_GET['education'];
 $monsterJobPostings = array();
 $diceJobPostings = array();
 $jobPostings = array();
-echo "before scrapping" . "<br><br>";
+
 // scrap websites
 // getMonsterJobPostings('monster.htm');
 // getDiceJobPostings('dice.htm');
 getDiceJobPostings(createDiceURL());
 getMonsterJobPostings(createMonsterURL());
-echo "after scrapping" . "<br><br>";
+
 // merge job postings
 $jobPostings = mergeJobPostings($monsterJobPostings, $diceJobPostings);
 
@@ -152,7 +185,7 @@ outputDicDataToHTML($jobPostings);
 writeToJsonFile($jobPostings);
 
 // redirect after script completion
-echo "<script>window.location = './results.html'</script>";
+// echo "<script>window.location = './results.html'</script>";
 ?>
 
 
