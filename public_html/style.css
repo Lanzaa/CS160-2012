@@ -1,6 +1,4 @@
 .results {
-   border: 2px solid black;
-   border-radius: 5px;
    cursor: default;
    display: block;
    font-family:arial,helvetica,sans-serif;
@@ -15,15 +13,26 @@
 }
 
 .search {
-   border: 2px solid black;
-   border-radius: 5px;
    font-family:arial,helvetica,sans-serif;
    font-size: 14px;
-   height: 65px;
+   height: 85px;
    padding: 5px;
-   width: 1024px;
+   width: 1024pxk;
+   azimuth:center;
 }
 
+.titleTest{
+        color: #424242;
+        font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+	letter-spacing:0.1em;
+	text-align:center;
+	margin: 40px auto;
+	text-transform: lowercase;
+	line-height: 145%;
+	font-size: 14pt;
+	font-variant: small-caps;
+        
+}
 .search ul {
    list-style-type:none;
    list-style-position:inside;

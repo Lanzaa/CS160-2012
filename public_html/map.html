@@ -1,59 +1,170 @@
 <html>
-  <script>
-    var map, geocoder;
-    // initialize the map and geocoder objects, assign autocomplete to location text field.
-    function initialize() {
-      // required options for the map.
-      var mapOptions = { zoom: 10, center: new google.maps.LatLng(0, 0), mapTypeId: google.maps.MapTypeId.ROADMAP };
-      // the field object where location is typed in.
-      var input = document.getElementsByName('location')[0];
-      //enable autocomplete on input field, and update map when autocomplete option clicked.
-      autocomplete = new google.maps.places.Autocomplete(input);
-      google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        map.setCenter(autocomplete.getPlace().geometry.location);
-      });
-      // create a map, listener for map location changed
-      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-      google.maps.event.addListener(map, 'center_changed', function() { updateLocation(input); });
-      // create a geocoder for lat-long translatiion.
-      geocoder = new google.maps.Geocoder();
-      // initially place the map where the user has given us a location.
-      updateMap(input.value);
-    }
+	<!-- Load the Google Maps API with the places library. -->
+	<script src="https://maps.googleapis.com/maps/api/js?&sensor=true&libraries=places"></script>
+	<script>
+		// TODO fake json for testing. TODO
+		var test = [{
+    "title": "Software Monkey",
+    "company": "Cisco Systems",
+    "city": "San Jose, California",
+    "salary": 65000,
+    "requirements": "Potty Training, 3 years experience",
+    "link": "http://www.petsorfood.com/wordpress/products-page/mammals/spider-monkey/",
+},
+{
+    "title": "Software Monkey",
+    "company": "Ericsson Inc",
+    "city": "San Jose, CA",
+    "salary": 65000,
+    "requirements": "Potty Training, 3 years experience",
+    "link": "http://www.petsorfood.com/wordpress/products-page/mammals/spider-monkey/",
+},
+{
+    "title": "Software Monkey",
+    "company": "Google",
+    "city": "Mountain View",
+    "salary": 65000,
+    "requirements": "Potty Training, 3 years experience",
+    "link": "http://www.petsorfood.com/wordpress/products-page/mammals/spider-monkey/",
+}];
 
-    // load the google maps api for use, run via window.onload after website is done loading.
-    function loadScript() {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=places&callback=initialize';
-      document.body.appendChild(script);
-    }
-    window.onload = loadScript;
+		// when the page is loaded, call init function.
+		google.maps.event.addDomListener(window, 'load', init);
 
-    // update the map's displayed area based on where the user typed in.
-    function updateMap(location) {
-      // if the location is not empty, update the map.
-      if (location != "") {
-        geocoder.geocode({ 'address': location }, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK)
-            map.setCenter(results[0].geometry.location);
-        });
-      }
-    }
+		// Variables for use internally
+		var map, geocoder, markers = [];
 
-    // update the location test field based on where the map has been moved to.
-    function updateLocation(field) {
-      geocoder.geocode({ 'latLng': map.getCenter() }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK && results[1])
-          field.value = results[1].formatted_address;
-      });
-    }
-  </script>
-  <body>
-    <form onsubmit="updateMap(document.getElementsByName('location')[0].value);return false" method="get">
-      Location: <input id="location" type="text" name="location" size="40">
-      <input type="submit" value="Search">
-    </form>
-    <div id="map_canvas" style="width:500px; height:500px"></div>
-  </body>
+		// Initialize the map and geocoder objects, assign autocomplete to location text field.
+		function init() {
+			// required options for the map.
+			mapOptions = { zoom:10, center:new google.maps.LatLng(0, 0), mapTypeId:google.maps.MapTypeId.ROADMAP };
+			// the field object where location is typed in.
+			input = document.getElementsByName('location')[0];
+			//enable autocomplete on input field, and update map when autocomplete option clicked.
+			autocomplete = new google.maps.places.Autocomplete(input);
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				map.setCenter(autocomplete.getPlace().geometry.location);
+			});
+			// create a map, listener for map location changed
+			map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+			google.maps.event.addListener(map, 'center_changed', function() { updateLocation(input); });
+			// create a geocoder for lat-long translatiion.
+			geocoder = new google.maps.Geocoder();
+			// initially place the map where the user has given us a location.
+			updateMap(input.value);
+			parseStuff(test);
+		}
+
+		// Update the map's displayed area based on location supplied by user.
+		function updateMap(location) {
+			// if the location is not empty, update the map.
+			if (location != "") {
+				geocoder.geocode({ 'address': location }, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						// TODO map.setZoom(15);
+						map.setCenter(results[0].geometry.location);
+					}
+				});
+			}
+		}
+
+		// Update the location text field based on where the map has been moved to.
+		function updateLocation(field) {
+			geocoder.geocode({ 'latLng': map.getCenter() }, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK)
+					field.value = getLocality(results);
+			});
+		}
+
+		// Get the locality string from a results objects.
+		function getLocality(results) {
+			for (i = 0; i < results.length; i++)
+				for (j = 0; j < results[i].types.length; j++)
+					if (results[i].types[j] == "locality")
+						return results[i].formatted_address;
+		}
+
+		// Add a marker to the map given a business name and city.
+		function addMarker(name, city, json_stuff) {
+			if (name == "" || city == "")
+				return;
+			new google.maps.Geocoder().geocode({ 'address':city }, function(r, s) {
+					if (s == google.maps.GeocoderStatus.OK) {
+						new google.maps.places.PlacesService(map).
+							nearbySearch({ location:r[0].geometry.location, radius:50000, name:name }, createMarker(json_stuff));
+					}
+			});
+		}
+
+		function createMarker(json_stuff) {
+			out = function(results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					marker = new google.maps.Marker({ map:map, position:results[0].geometry.location });
+					markers.push(marker);
+					google.maps.event.addListener(marker, 'click', function() {
+						var infowindow = new google.maps.InfoWindow();
+						infowindow.setContent(getContent(json_stuff));
+						infowindow.open(map, this);
+					});
+					resizeMap();
+				}
+			}
+			return out;
+		}
+
+		function parseStuff(json) {
+			// for each json entry, create a marker.
+			for (i = 0; i < json.length; i++)
+				addMarker(json[i].company, json[i].city, json[i]);
+			// all markers added, resize the map.
+			//resizeMap();
+		}
+
+		// create a content string for a given json entry.
+		function getContent(r) {
+			var ans = r.company + " in " + r.city + "\n";
+			ans += "is hiring a " + r.title + " for $" + r.salary + " a year\n";
+			ans += r.link + "\n";
+			return ans;
+		}
+
+		// Resize the map to fit all the markers.
+		function resizeMap() {
+			// north, east, south, west, current lattitude, current longitude
+			var n = -90, e = -180, s = 90, w = 180, curLat, curLng;
+			for (i = 0; i < markers.length; i++) {
+				curLat = markers[i].position.lat();
+				curLng = markers[i].position.lng();
+				console.log(curLat + ", " + curLng);
+				n = n < curLat ? curLat : n;
+				e = e < curLng ? curLng : e;
+				s = s > curLat ? curLat : s;
+				w = w > curLng ? curLng : w;
+			}
+			console.log(n + ", " + e + ", " + s + ", " + w);
+			// update the map's display based on north-east and south-west corners
+			map.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(s, w), new google.maps.LatLng(n, e)));
+		}
+
+		// Clear all markers from the map
+		function clearMarkers() {
+			for (i in markers)
+				markers[i].setMap(null);
+			markers.length = 0;
+		}
+
+	</script>
+	<body>
+		<form onsubmit="updateMap(document.getElementsByName('location')[0].value);return false" method="get">
+			Location: <input id="location" type="text" name="location" size="40">
+			<input type="submit" value="Search">
+		</form>
+		<div id="map_canvas" style="width:500px; height:500px"></div>
+		<form onsubmit="addMarker(document.getElementsByName('company_name')[0].value, document.getElementsByName('comapny_city')[0].value);return false" method="get">
+			Company Name: <input id="company_name" type="text" name="company_name" size="40">
+			Company City: <input id="company_city" type="text" name="company_city" size="40">
+			<input type="submit" value="Place Marker">
+		</form>
+	</body>
 </html>
+
