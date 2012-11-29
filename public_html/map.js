@@ -17,7 +17,7 @@ function init() {
 	});
 	// create a map, listener for map location changed
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-	google.maps.event.addListener(map, 'center_changed', function() { updateLocation(input); });
+	google.maps.event.addListener(map, 'dragend', function() { updateLocation(input); });
 	// initially place the map where the user has given us a location.
 	updateMap(input.value);
 	// parse the json file.  TODO hard coded directory, keep up to date!
@@ -37,14 +37,22 @@ function updateMap(location) {
 
 // Update the location text field based on where the map has been moved to.
 function updateLocation(field) {
-	new google.maps.Geocoder().geocode({ 'latLng': map.getCenter() }, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK)
-			for (i = 0; i < results.length; i++)
-				for (j = 0; j < results[i].types.length; j++)
-					if (results[i].types[j] == "locality")
-						field.value = results[i].formatted_address;
+	cur = field.value;
+	new google.maps.Geocoder().geocode({ 'latLng': map.getCenter() }, function(r, s) {
+		if (s == google.maps.GeocoderStatus.OK) {
+			for (i = 0; i < r.length; i++) {
+				for (j = 0; j < r[i].types.length; j++) {
+					if (r[i].types[j] == "locality") {
+						console.log(r[i].formatted_address);
+						field.value = r[i].formatted_address;
+					}
+				}
+			}
+		}
+		// Perform a new search
+		if (cur != field.value)
+			document.forms["user_input"].submit();
 	});
-	// TODO redo search goes here
 }
 
 // Add a marker to the map given a business name and city.
@@ -57,7 +65,7 @@ function addMarker(json) {
 				nearbySearch({ location:r[0].geometry.location, radius:50000, name:json.name }, createMarker(json));
 				} else { // sleep 1/4 of a second and try again.
 				console.log(s);
-			setTimeout(function() { addMarker(json); }, 250);
+			setTimeout(function() { addMarker(json); }, 300);
 		}
 	});
 }
@@ -93,7 +101,7 @@ function parseJSON(path) {
 
 // create a content string for a given json entry.
 function getContent(r) {
-	return r.company + " in " + r.city + "\n" + r.title + "\n" + r.salary;
+	return r.company + " in " + r.city + " are hiring a(n) " + r.title + " for " + r.salary + " annually";
 }
 
 // Resize the map to fit all the markers.

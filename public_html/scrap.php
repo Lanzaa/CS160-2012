@@ -38,9 +38,9 @@ function getMonsterJobPostings($page) {
 		$link = $element->children(1)->children(0)->children(0)->first_child()->href;
 		$requirements = $requirementsArray[rand(0,sizeof($requirementsArray) - 1)];
 		
-		if (sizeof($salary) == 0) {
+		/*if (sizeof($salary) == 0) {
 			$salary = $salaryArray[rand(0,sizeof($salaryArray) - 1)];
-		}
+		}*/
 	
 		$monsterJobPostings[] = array(
 			'title' => $title,
@@ -113,6 +113,7 @@ function writeToJsonFile($inputData) {
 
 function createMonsterURL() {
 	global $inLocation, $inKeyword;
+	global $inSalary;
 	$data = array();
 	$url = "http://jobsearch.monster.com/search/?";
 	
@@ -123,9 +124,15 @@ function createMonsterURL() {
 	if (strlen($inLocation) > 0) {
 		$data["where"] = $inLocation;
 	}
+
+	if(isset($inSalary)){
+		$data["salmin"] = $inSalary;
+		$data["saltyp"] = "1";
+		$data["nosal"] = "false";
+	}
 	
 	$url .= convertToMonsterEncoding(http_build_query($data));
-	// echo $url . "<br><br>";
+	 echo $url . "<br><br>";
 	return $url;
 }
 
@@ -172,6 +179,7 @@ $jobPostings = array();
 // scrap websites
 // getMonsterJobPostings('monster.htm');
 // getDiceJobPostings('dice.htm');
+if(!(isset($inSalary)) || $inSalary == "")
 getDiceJobPostings(createDiceURL());
 getMonsterJobPostings(createMonsterURL());
 
@@ -185,14 +193,6 @@ outputDicDataToHTML($jobPostings);
 writeToJsonFile($jobPostings);
 
 // redirect after script completion
-// echo "<script>window.location = './results.html'</script>";
+echo "<script>window.location = './results.php?location={$_GET['location']}&keyword={$_GET['keyword']}&salary={$_GET['salary']}&education={$_GET['education']}'</script>";
 ?>
-
-
-
-
-
-
-
-
 
