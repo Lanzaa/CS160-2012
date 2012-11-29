@@ -1,15 +1,15 @@
 // when the page is loaded, call init function.
 google.maps.event.addDomListener(window, 'load', init);
 
-// Variables for use internally
-var map, geocoder, markers = [];
+// Variables for use internally.
+var map, markers = [];
 
-// Initialize the map and geocoder objects, assign autocomplete to location text field.
+// Initialize the map, assign autocomplete to location text field.
 function init() {
 	// required options for the map.
 	mapOptions = { zoom:10, center:new google.maps.LatLng(0, 0), mapTypeId:google.maps.MapTypeId.ROADMAP };
 	// the field object where location is typed in.
-	input = document.getElementsByName('location')[0];
+	input = document.getElementsByName('location')[0]; // TODO hard coded field.
 	//enable autocomplete on input field, and update map when autocomplete option clicked.
 	autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -20,7 +20,8 @@ function init() {
 	google.maps.event.addListener(map, 'center_changed', function() { updateLocation(input); });
 	// initially place the map where the user has given us a location.
 	updateMap(input.value);
-	parseJSON("./results/results.json"); // TODO hard coded directory, keep up to date!
+	// parse the json file.  TODO hard coded directory, keep up to date!
+	parseJSON("./results/results.json");
 }
 
 // Update the map's displayed area based on location supplied by user.
@@ -38,28 +39,25 @@ function updateMap(location) {
 function updateLocation(field) {
 	new google.maps.Geocoder().geocode({ 'latLng': map.getCenter() }, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK)
-			field.value = getLocality(results);
+			for (i = 0; i < results.length; i++)
+				for (j = 0; j < results[i].types.length; j++)
+					if (results[i].types[j] == "locality")
+						field.value = results[i].formatted_address;
 	});
-}
-
-// Get the locality string from a results objects.
-function getLocality(results) {
-	for (i = 0; i < results.length; i++)
-		for (j = 0; j < results[i].types.length; j++)
-			if (results[i].types[j] == "locality")
-				return results[i].formatted_address;
+	// TODO redo search goes here
 }
 
 // Add a marker to the map given a business name and city.
-function addMarker(name, city, json) {
-	if (name == "" || city == "")
+function addMarker(json) {
+	if (json.name == "" || json.city == "")
 		return;
-	new google.maps.Geocoder().geocode({ 'address':city }, function(r, s) {
+	new google.maps.Geocoder().geocode({ 'address':json.city }, function(r, s) {
 		if (s == google.maps.GeocoderStatus.OK) {
 			new google.maps.places.PlacesService(map).
-				nearbySearch({ location:r[0].geometry.location, radius:50000, name:name }, createMarker(json));
-		} else { // sleep 1/4 of a second and try again.
-			setTimeout(function() {addMarker(name, city, json);}, 250);
+				nearbySearch({ location:r[0].geometry.location, radius:50000, name:json.name }, createMarker(json));
+				} else { // sleep 1/4 of a second and try again.
+				console.log(s);
+			setTimeout(function() { addMarker(json); }, 250);
 		}
 	});
 }
@@ -70,10 +68,13 @@ function createMarker(json) {
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
 			marker = new google.maps.Marker({ map:map, position:results[0].geometry.location });
 			markers.push(marker);
-			google.maps.event.addListener(marker, 'click', function() {
-				var infowindow = new google.maps.InfoWindow();
-				infowindow.setContent(getContent(json));
-				infowindow.open(map, this);
+			infowindow = new google.maps.InfoWindow({ disableAutoPan:true });
+			google.maps.event.addListener(marker, 'mouseover', function() {
+					infowindow.setContent(getContent(json));
+					infowindow.open(map, this);
+			});
+			google.maps.event.addListener(marker, 'mouseout', function() {
+				infowindow.close();
 			});
 			resizeMap();
 		}
@@ -81,19 +82,18 @@ function createMarker(json) {
 	return out;
 }
 
-// 
+// Parse a set of JSON objects into markers.
 function parseJSON(path) {
-	// for each json entry, create a marker.
 	$.getJSON(path, function(data) {
 		$.each(data, function(i, item) {
-			addMarker(item.company, item.city, item);
+			addMarker(item);
 		});
 	});
 }
 
 // create a content string for a given json entry.
 function getContent(r) {
-	return r.company + "\n" + r.city + "\n" + r.title + "\n" + r.salary + "\n" + r.link;
+	return r.company + " in " + r.city + "\n" + r.title + "\n" + r.salary;
 }
 
 // Resize the map to fit all the markers.
@@ -111,4 +111,3 @@ function resizeMap() {
 	// update the map's display based on north-east and south-west corners
 	map.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(s, w), new google.maps.LatLng(n, e)));
 }
-
