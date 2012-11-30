@@ -1,0 +1,12 @@
+Interactive Map (map.js), developed by Sam Lanzo:
+
+The interactive map is a way of showing a user where the specific job offers are located.  This allows the user to make a more informed decision regarding where they would like to work, with respect to housing options and commute times.  
+
+It is implemented via the Google Maps API v3.  The API allows me to display a map with markers for each of the job locations.  To determine the locations, I do a reverse geocode of the 'city, state' string from the JSON job object to give me a lat/lon location.  This lat/lon is then used to do a nearby search for the company name to determine an address within 50km of the city center.  The first result is used to make a marker on the map.  Currently, the behavior is to display job specifics above the marker when it is moused over, and to hide the specifics when it is moused off.  Also, the user may click on the marker to bring them to the job posting on either monster or dice.
+
+Not all job offers create a marker, as many are simply temp agencies offering a job in a given city, and therefore have no office in that location.  Also, due to usage restrictions, the pins can take up to 10+ seconds to fully populate.  This would be reduced by purchasing a business API key, which would allow many more simultaneous requests.  Also, we plan to change the results page to only display 10 results at a time, which will limit the number of concurrent requests and severely reduce the lookup time.
+
+The map can also be used by the user to update the location they wish to search.  If the user click-and-drags the map around the screen, the location that is centered on mouse release is recalculated and the location field is updated to match.  This also triggers a new search being done given the updated location.  I have plans to implement a check-box that the user can select to enable this feature in order to make it more user friendly, instead of the current always on behavior.  This will also allow the user to move the map around to view the job specifics without it being cut off the edge of the map.
+
+As has been mentioned, a reduction in the lookup time is planned via a limiting of results displayed at any given time.  Also, a check box to enable search by map location is planned to make that a more user friendly feature.  I am also exploring options to make the interface more user friendly in regards to displaying the job specifics on the map instead of off the side.
+
