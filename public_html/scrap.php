@@ -155,9 +155,26 @@ function convertToMonsterEncoding($url) {
 	return $url;
 }
 
-// TODO: write a better merge function, it should check for potential duplicates
+// Remove potential duplicates and merge
 function mergeJobPostings($monsterJP, $diceJP) {
+	// remove duplicate job posts from $diceJP
+	for ($i = 0; $i < sizeof($monsterJP); $i++) {
+		for ($j = 0; $j < sizeof($diceJP); $j++) {
+			$val = compareJobPosts($monsterJP[$i], $diceJP[$j]);
+			if ($val == 0) {
+				// TODO: delete the post with less information
+				unset($diceJP[$j]);
+				break;
+			}
+		}
+	}
 	return array_merge($monsterJP, $diceJP);
+}
+
+function compareJobPosts($jp1, $jp2) {
+	return ( abs(strcmp($jp1['title'], $jp2['title'])) +
+			 abs(strcmp($jp1['city'], $jp2['city'])) +
+			 abs(strcmp($jp1['company'], $jp2['company'])) );
 }
 
 // echo "Hello" . "<br><br>";
