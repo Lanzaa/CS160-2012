@@ -168,7 +168,9 @@ function mergeJobPostings($monsterJP, $diceJP) {
 			}
 		}
 	}
-	return array_merge($monsterJP, $diceJP);
+	$mergedJP = array_merge($monsterJP, $diceJP);
+	shuffle($mergedJP);
+	return $mergedJP;
 }
 
 function compareJobPosts($jp1, $jp2) {
