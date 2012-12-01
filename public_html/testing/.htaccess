@@ -1,4 +1,0 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-# Don't interfere with static files
-RewriteRule ^(.*)$ /www/cs160.1101b.com/public_html/p/app.cgi/$1 [L]
