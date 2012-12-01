@@ -1,71 +1,126 @@
+<!DOCTYPE html>
 <html>
+<!--Load the Google Maps API with the places library.-->
+<script src="https://maps.googleapis.com/maps/api/js?&sensor=true&libraries=places"></script>
+<!-- Load jquery to read the JSON from a file. -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!-- Load the map interface stuff. -->
+<script src="map.js"></script>
+
 <head>
-<title>CS160 Team 1</title>
-	<link href="style.css" rel="stylesheet">
-  <script>
-    var map, geocoder;
-    // initialize the map and geocoder objects, assign autocomplete to location text field.
-    function initialize() {
-      var mapOptions = { zoom: 13, center: new google.maps.LatLng(0, 0), mapTypeId: google.maps.MapTypeId.ROADMAP };
-      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-      geocoder = new google.maps.Geocoder();
-      google.maps.event.addListener(map, 'center_changed', function() { updateLocation(); });
-      var input = document.getElementsByName('location')[0];
-      autocomplete = new google.maps.places.Autocomplete(input);
-      google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        map.setCenter(autocomplete.getPlace().geometry.location);
-      });
-      updateMap(document.getElementsByName('location')[0].value);
-    }
-
-    // load the google maps api for use, run via window.onload after website is done loading.
-    function loadScript() {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=places&callback=initialize';
-      document.body.appendChild(script);
-    }
-    window.onload = loadScript;
-
-    // update the map's displayed area based on where the user typed in.
-    function updateMap(location) {
-      if (location != "") {
-        geocoder.geocode({ 'address': location }, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK)
-            map.setCenter(results[0].geometry.location);
-        });
-      }
-    }
-
-    // update the location test field based on where the map has been moved to.
-    function updateLocation() {
-      var input = document.getElementsByName("location")[0];
-      geocoder.geocode({ 'latLng': map.getCenter() }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK && results[1])
-            input.value = results[1].formatted_address;
-      });
-    }
-  </script>
+	<link rel = "stylesheet" type = "text/css" href = "style.css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 </head>
-        <body>
-	<div class="search">
-                <form onsubmit="updateMap(document.getElementsByName('location')[0].value);return false" method="get">
-                        <div class="label">Location</div>
-                        <input type="text" name="location" value="<?php echo $_GET["location"] ?>"><br>
-                        <div class="label">Keyword</div>
-                        <input type="text" name="keyword" value="<?php echo $_GET["keyword"] ?>"><br>
-                        <div class="label">Salary</div>
-                        <input type="text" name="salary" value="<?php echo $_GET["salary"] ?>"><br>
-                        <div class="label">Education</div>
-                        <input type="text" name="education" value="<?php echo $_GET["education"] ?>"><br>
-                        <input type="submit" value="Redo"><br>
-                </form>
-	</div>
-		<div class="results">
-                <div id="map_canvas" style="width: 600px; height: 500px"></div>
-	</div>
-	<div class="wut">
-		<a href="salary.php">Salary Search</a>
-	</div>
-        </body>
+<body id="div-my-tabl">
+
+<tr><td></td></tr>
+</table>
+        <div class = "subHeadline"> Didn't find what you were looking for? </div>
+        <div class = "search">
+	
+         <form name="user_input" action="scrap.php" method="get">
+            <p>
+             <div class="label"> Location:
+                  <input type="text" name="location" value="<?php echo $_GET['location']?>">
+               <div class="label">Keyword:
+                  <input type="text" name="keyword" value="<?php echo $_GET['keyword']?>">
+               </div>
+               <div class="label">Salary:
+			<select name="salary">
+                        <option value=""></option>
+                        <option value="30000">$30,000.00</option>
+                        <option value="40000">$40,000.00</option>
+                        <option value="50000">$50,000.00</option>
+                        <option value="60000">$60,000.00</option>
+			<option value="70000">$70,000.00</option>
+			<option value="80000">$80,000.00</option>
+			<option value="90000">$90,000.00</option>
+			<option value="100000">$100,000.00</option>
+			<option value="125000">$125,000.00</option>
+			<option value="150000">$150,000.00</option>
+                        </select>                  
+               </div>
+               <div class="label">Education:
+                  <select name="education">
+			<option value=""></option>
+			<option value="High-School">High School</option>
+			<option value="Associate-Degree">Associate Degree</option>
+			<option value="Bachelor's-Degree">Bachelor's Degree</option>
+			<option value="Advanced-Degree">Advanced Degree</option>
+		</select>
+               </div>
+            </p>
+          <input type="submit" value="Search">
+         </form>
+	
+     </div>
+      <div class="results">
+         <div class="title"></div>
+      </div>
+ 
+<h2 id="DATE">	
+<script language="javascript">
+<!--
+today = new Date();
+document.write("<BR> Searching jobs on the date of: ", today.getMonth()+1,"/",today.getDate(),"/",today.getYear());
+//-->
+</script> </h2>
+
+
+	<style type="text/css">
+	body {
+	
+	font-family: Georgia, "Times New Roman", Times, serif;
+        font-size:16px;
+	margin-top: 5px; margin-bottom: 0px;
+        font-weight: normal;
+        color: #222;
+	} </style>
+
+	<script>
+	$("document").ready(function() {
+	    $.getJSON("./results/results.json", function(data) {
+	        $("#div-my-table").text("<table>");
+	        $.each(data, function(i, item) {
+			
+				$("#div-my-tabl").append("<tr>");
+				$("#div-my-tabl").append("<td>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append('<a href="' + $(item).attr("link") + '">' + $(item).attr("title") + '</a>');
+				$("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append("</div>");
+				$("#div-my-tabl").append(item.company);
+				$("#div-my-tabl").append("<div>");
+				$("#div-my-tabl").append("</div>");	
+			        
+
+				$("#div-my-tabl").append(item.city);
+                                $("#div-my-tabl").append("<div>");
+                                $("#div-my-tabl").append("</div>");
+
+				$("#div-my-tabl").append(item.salary);
+                                $("#div-my-tabl").append("<div>");
+                                $("#div-my-tabl").append("</div>");
+				
+				$("#div-my-tabl").append(item.requirements);
+				$("#div-my-tabl").append("</td>");
+	            		$("#div-my-tabl").append("</tr>");
+				$("#div-my-tabl").append("<br />");
+				$("#div-my-tabl").append("<br />");
+				// $("#div-my-tabl").append("<br />");
+			
+	        });
+		
+	        $("#div-my-table").append("</table>");
+
+	    });
+	});
+	</script>
+<div id="map_cont"><div id="map_canvas" class="map_canvas" style="width:450px; height:450px"></div></div>
+	
+	<br><br>
+</body>
 </html>
