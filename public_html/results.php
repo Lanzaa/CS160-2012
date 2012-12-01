@@ -26,10 +26,28 @@
                   <input type="text" name="keyword" value="<?php echo $_GET['keyword']?>">
                </div>
                <div class="label">Salary:
-                  <input type="text" name="salary" value="<?php echo $_GET['salary']?>">
+			<select name="salary">
+                        <option value=""></option>
+                        <option value="30000">$30,000.00</option>
+                        <option value="40000">$40,000.00</option>
+                        <option value="50000">$50,000.00</option>
+                        <option value="60000">$60,000.00</option>
+			<option value="70000">$70,000.00</option>
+			<option value="80000">$80,000.00</option>
+			<option value="90000">$90,000.00</option>
+			<option value="100000">$100,000.00</option>
+			<option value="125000">$125,000.00</option>
+			<option value="150000">$150,000.00</option>
+                        </select>                  
                </div>
                <div class="label">Education:
-                  <input type="text" name="education" value="<?php echo $_GET['education']?>">
+                  <select name="education">
+			<option value=""></option>
+			<option value="High-School">High School</option>
+			<option value="Associate-Degree">Associate Degree</option>
+			<option value="Bachelor's-Degree">Bachelor's Degree</option>
+			<option value="Advanced-Degree">Advanced Degree</option>
+		</select>
                </div>
             </p>
           <input type="submit" value="Search">
@@ -101,7 +119,7 @@ document.write("<BR> Searching jobs on the date of: ", today.getMonth()+1,"/",to
 	    });
 	});
 	</script>
-<div id="map_canvas" class="map_canvas" style="width:500px; height:500px"></div>
+<div id="map_cont"><div id="map_canvas" class="map_canvas" style="width:450px; height:450px"></div></div>
 	
 	<br><br>
 </body>

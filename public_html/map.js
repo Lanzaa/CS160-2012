@@ -84,6 +84,9 @@ function createMarker(json) {
 			google.maps.event.addListener(marker, 'mouseout', function() {
 				infowindow.close();
 			});
+			google.maps.event.addListener(marker, 'click', function() {
+				window.location = json.link;
+			});
 			resizeMap();
 		}
 	}

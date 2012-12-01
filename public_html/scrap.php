@@ -67,7 +67,7 @@ function getDiceJobPostings($page) {
 		$company = $element->children(1)->children(0)->innertext;		
 		$link = "http://seeker.dice.com/" . $element->children(0)->children(0)->first_child()->href;
 		$requirements = $requirementsArray[rand(0,sizeof($requirementsArray) - 1)];
-		$salary = $salaryArray[rand(0,sizeof($salaryArray) - 1)];
+		//$salary = $salaryArray[rand(0,sizeof($salaryArray) - 1)];
 
 		$diceJobPostings[] = array(
 			'title' => $title,
@@ -113,7 +113,7 @@ function writeToJsonFile($inputData) {
 
 function createMonsterURL() {
 	global $inLocation, $inKeyword;
-	global $inSalary;
+	global $inSalary, $inEducation;
 	$data = array();
 	$url = "http://jobsearch.monster.com/search/?";
 	
@@ -125,10 +125,14 @@ function createMonsterURL() {
 		$data["where"] = $inLocation;
 	}
 
-	if(isset($inSalary)){
+	if(isset($inSalary) && $inSalary != ""){
 		$data["salmin"] = $inSalary;
 		$data["saltyp"] = "1";
 		$data["nosal"] = "false";
+	}
+
+	if(isset($inEducation) && $inEducation != ""){
+		$data["eid"] = $inEducation;
 	}
 	
 	$url .= convertToMonsterEncoding(http_build_query($data));
@@ -198,8 +202,8 @@ $jobPostings = array();
 // scrap websites
 // getMonsterJobPostings('monster.htm');
 // getDiceJobPostings('dice.htm');
-if(!(isset($inSalary)) || $inSalary == "")
-getDiceJobPostings(createDiceURL());
+if((!(isset($inSalary)) || $inSalary == "") && (!isset($inEducation) || $inEducation == ""))
+	getDiceJobPostings(createDiceURL());
 getMonsterJobPostings(createMonsterURL());
 
 // merge job postings
