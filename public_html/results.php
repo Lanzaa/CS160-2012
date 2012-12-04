@@ -14,7 +14,7 @@
         <div class = "subHeadline"> Didn't find what you were looking for? </div>
         <div class = "search">
 	
-		<form name="user_input" action="scrap.php" method="get">
+		<form name="user_input" action="scrape.php" method="get">
 			<p>
 			<div class="label"> Location:
 				<input type="text" name="location" value="<?php echo $_GET['location']?>">
@@ -42,7 +42,7 @@
 					<option value=""></option>
 					<option value="High-School">High School</option>
 					<option value="Associate-Degree">Associate Degree</option>
-					<option value="Bachelor's-Degree">Bachelor's Degree</option>
+					<option value="Bachelors-Degree">Bachelors Degree</option>
 					<option value="Advanced-Degree">Advanced Degree</option>
 				</select>
 			</div>
@@ -50,6 +50,33 @@
 			<input type="submit" value="Search">
 		</form>
 </div>
+
+<!-- repopulate the salary and education fields. -->
+<script>
+	repopulate(document.getElementsByName('salary')[0], getUrlVars()['salary']);
+	repopulate(document.getElementsByName('education')[0], getUrlVars()['education']);
+
+	// taken from http://snipplr.com/view/799/get-url-variables/
+	// Read a page's GET URL variables and return them as an associative array.
+	function getUrlVars() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++) {
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+
+	// repopulate a select drop down box with the given value.
+	function repopulate(selection, value) {
+		for (var i = 0; i < selection.options.length; i++)
+			if (selection.options[i].value == value)
+				selection.selectedIndex = i;
+	}
+</script>
+
 <div class="results">
 	<div class="title"></div>
 </div>
