@@ -1,0 +1,54 @@
+A. Core Feature Validation
+1)	list each (working) feature & comment on what is/is not working (4x5=20%)
+2)	unified input working? (10%)
+3)	scrapped content combined uniformly? (10%)
+4)	user friendly interface? (10%)
+5)	strategies to avoid duplicate entries? (10%)
+
+B. Selenium Testing
+-Record a test suite on one complete workflow, name it test_sec1_group3.html
+
+C. Behavior Modeling
+-adequate sequence diagram? (10%)
+
+D. Report
+1)	Screenshots illustrate website use? (10%)
+2)	For each feature in A.1), could the feature be recoded with the given documentation? (10%)
+
+
+A.
+1)(13/20)
+3/4		Unified Search Form- Can manually type incorrect dates (cannot do at homeaway).  Can type nonsense location.
+3/4		Unified Output- Price broken for homeaway, airbnb results always on top.
+4/4		Suggested Location- Works fine.
+1/4		Local Restaurants- No information about restaurant, not sorted.
+2/4		Comparator- Not enough room, display less information than iframe.
+0/4		Google Map- Works first time, never works again until new search.
+2)(?/10)	can manually type incorrect dates or nonsense location.
+3)(?/10)	airbnb is always on top of homeaway, homeaway prices are wrong.
+4)(4/10)	lose ability to look at map while comparing sites, no room to compare sites.
+5)(5/10)	Location more accurate duplicate check than name (name ex: safe appt in cupertino).
+
+B. 
+
+C.(5/10)	Not enough returns for sequence to be maintained, not a true sequence since things seem to happen concurrently.
+
+D. 
+1)(10/10)	Yes, well documented.
+2)(5/10)	Unified Search Form- documentation says error checking for incorrect date, but the user can type incorrect dates or a nonsense location manually without error.  More detail would ease recoding.
+		Unified Output- More detail would ease recoding.
+		Suggested Location- More detail would ease recoding.
+		Local Restaurants- More detail would ease recoding.
+		Comparator- Detailed explanation of implementation, could be recoded.
+		Google Map- More detail would ease recoding.
+
+
+Additional Notes:
+
+Under sites used, not mentioned that the following two are used:
+date comparison taken from http://stackoverflow.com/questions/492994/compare-dates-with-javascript
+date picker taken from http://jqueryui.com/
+
+Using http://www.websiteoptimization.com/services/analyze/, determined that homepage weighs in at ~1MB due to extensive javascript for date picker.  Alternative, much lighter weight date picker can be seen at https://github.com/amsul/pickadate.js
+
+See incorrect_price1/2 for homeaway price errors, and website_size for ~1MB size estimate.
