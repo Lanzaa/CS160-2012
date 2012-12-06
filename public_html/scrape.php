@@ -199,7 +199,7 @@ $monsterJobPostings = array();
 $diceJobPostings = array();
 $jobPostings = array();
 
-// scrap websites
+// scrape websites
 // getMonsterJobPostings('monster.htm');
 // getDiceJobPostings('dice.htm');
 if((!(isset($inSalary)) || $inSalary == "") && (!isset($inEducation) || $inEducation == ""))

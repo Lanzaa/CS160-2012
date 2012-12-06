@@ -118,7 +118,10 @@ $("#DATE").text("Searching jobs on the date of: "+(today.getMonth()+1)+"/"+today
 	    });
 	});
 	</script>
-<div id="map_cont"><div id="map_canvas" class="map_canvas" style="width:450px; height:450px"></div></div>
+<div id="map_cont">
+    <div id="d_cb"><label for="cb">Checkbox Label</label><input id="cb" type="checkbox" /></div>
+    <div id="map_canvas" class="map_canvas" style="width:450px; height:450px"></div>
+</div>
 	
 	<br><br>
 </body>
