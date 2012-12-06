@@ -183,7 +183,6 @@ function compareJobPosts($jp1, $jp2) {
 			 abs(strcmp($jp1['company'], $jp2['company'])) );
 }
 
-// echo "Hello" . "<br><br>";
 // ******************Start Scraping******************
 // import library(s)
 include('simple_html_dom.php');
@@ -216,6 +215,8 @@ outputDicDataToHTML($jobPostings);
 writeToJsonFile($jobPostings);
 
 // redirect after script completion
-echo "<script>window.location = './results.php?location={$_GET['location']}&keyword={$_GET['keyword']}&salary={$_GET['salary']}&education={$_GET['education']}'</script>";
+echo "<script>window.location = './results.php?location=".urlencode($_GET['location']);
+echo "&keyword=".urlencode($_GET['keyword']);
+echo "&salary=".urlencode($_GET['salary'])."&education=".urlencode($_GET['education'])."'</script>";
 ?>
 
