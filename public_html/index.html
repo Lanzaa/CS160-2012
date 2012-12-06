@@ -5,12 +5,13 @@
 		<link rel = "stylesheet" type = "text/css" href = "style.css"/>
 	</head>
 	<body>
-		<table class='table1' height="212" width="228"
-			background="http://www.andreasondecks.com/gsquared-webdesign.gif" align=center>
-		<tr><td></td></tr>
+		<table class='table1' height="212" width="228" background="http://www.andreasondecks.com/gsquared-webdesign.gif" align=center>
+			<tr><td></td></tr>
 		</table>
-		<div class="headline"> Search for your dream job. </div>
-		<div class="subheadline"> Start your new career. </div>
+
+		<div class="headline"> Search for your dream job.</div>
+		<div class="subheadline"> Start your new career.</div>
+
 		<div class="search">
 			<form action="scrape.php" method="get">
 				<p>
@@ -21,23 +22,21 @@
 						<input type="text" name="keyword">
 					</div>
 					<div class="label">Minimum Salary:
-					<!--	<input type="text" name="salary">-->
 						<select name="salary">
-                                                        <option value=""></option>
-                                                        <option value="30000">$30,000.00</option>
-                                                        <option value="40000">$40,000.00</option>
-                                                        <option value="50000">$50,000.00</option>
-                                                        <option value="60000">$60,000.00</option>
+							<option value=""></option>
+							<option value="30000">$30,000.00</option>
+							<option value="40000">$40,000.00</option>
+							<option value="50000">$50,000.00</option>
+							<option value="60000">$60,000.00</option>
 							<option value="70000">$70,000.00</option>
 							<option value="80000">$80,000.00</option>
 							<option value="90000">$90,000.00</option>
 							<option value="100000">$100,000.00</option>
 							<option value="125000">$125,000.00</option>
 							<option value="150000">$150,000.00</option>
-                                                </select>
+						</select>
 					</div>
 					<div class="label">Education:
-						<!--<input type="text" name="education">-->
 						<select name="education">
 							<option value=""></option>
 							<option value="High-School">High School</option>
@@ -50,11 +49,14 @@
 				<input type="submit" value="Search">
 			</form>
 		</div>
+
 		<div class="results">
 			<div class="title"></div>
 		</div>
 	</body>
-	<script>
-		new google.maps.places.Autocomplete(document.getElementsByName('location')[0]);
-	</script>
 </html>
+
+<script>
+	// Add autocomplete to the location search box.
+	new google.maps.places.Autocomplete(document.getElementsByName('location')[0]);
+</script>

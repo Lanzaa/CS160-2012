@@ -1,30 +1,20 @@
 .results {
-   cursor: default;
-   display: block;
-   font-family:arial,helvetica,sans-serif;
-   font-size: 14px;
-   height: 75%;
-   padding: 5px;
-   position: relative;
-   text-align: justify;
-   top: 10px;
-   width: 1024px;
-   z-index: 1;
+	cursor: default;
+	display: block;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 14px;
+	height: 75%;
+	padding: 5px;
+	position: relative;
+	text-align: justify;
+	top: 10px;
+	width: 1024px;
+	z-index: 1;
 }
-
-.resultsTest {
-background:#000000;
-	float:left;
-	width:790px;
-	margin:20px 30px 0px 30px;
-}
-
 
 .search {
-
-	
-        color: #424242;
-        font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+	color: #424242;
+	font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
 	letter-spacing:0.1em;
 	text-align:center;
 	line-height: 200px;
@@ -33,76 +23,80 @@ background:#000000;
 	line-height: 145%;
 	font-size: 14pt;
 	font-variant: small-caps;
-        
 }
 
 select {
 	font-family: "Times New Roman", Times, serif;
 }
 
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
+	margin-top: 5px; margin-bottom: 0px;
+	font-weight: normal;
+	color: #222;
+}
+
 .headline {
- font-family: Georgia, "Times New Roman", Times, serif;
-        font-size:24px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size:24px;
 	margin-top: 5px; margin-bottom: 0px;
 	text-align: center;
-        font-weight: normal;
-        color: #222;
+	font-weight: normal;
+	color: #222;
 }
 
 .subHeadline {
- font-family: "Lucida Grande", Tahoma;
+	font-family: "Lucida Grande", Tahoma;
 	font-size: 10px;
 	font-weight: lighter;
 	font-variant: normal;
 	text-transform: uppercase;
 	color: #666666;
-        margin-top: 10px;
+	margin-top: 10px;
 	text-align: center!important;
 	letter-spacing: 0.3em;
 }
 
-#DATE{
-	  font-size: 85%;
-	  text-transform: uppercase;
-	  letter-spacing: 1px;
-	  color: #bbb;
-	  font-size: 10px;
-	  font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
-	  font-weight: 100;
-	 }
+.footer {
+	color: #000000;
+	bottom: 20px;
+	position: absolute;
+}
 
-#HEADLINE{
+.table1 {
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+#DATE {
+	font-size: 85%;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #bbb;
+	font-size: 10px;
+	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+	font-weight: 100;
+}
+
+#HEADLINE {
 	font: bold 34px "Century Schoolbook", Georgia, Times, serif;
 	color: #333;
 	line-height: 90%;
 	margin: .2em 0 .4em 0;
 	letter-spacing: -2px;
-	}
+}
 
-#TAG{
+#TAG {
 	color: #76879b;
 	font-size: 10px;
 	margin: 5px;
 	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
 	font-size: 11px;
-	}
-		
-.footer {
-    color: #000000;
-    bottom: 20px;
-    position: absolute;
-}
-
-.table1 {
-filter:alpha(opacity=50);
-opacity:0.5; }
-
-.map_canvas {
-    float:right;
 }
 
 #map_cont {
-    position: fixed;
-    bottom: 5px;
-    right: 5px;
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
 }
