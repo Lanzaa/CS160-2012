@@ -3,6 +3,14 @@ CS160-2012
 
 CS 160 project reposity for group 2
 
+Jacob Barrick
+Colin Blower
+Hon-ming Chen
+Curtis Davis
+Victor Frandsen
+Sam Lanzo
+Andrew Miller
+Yu-Ching Wang
 
 
 ## Unified Data Format
