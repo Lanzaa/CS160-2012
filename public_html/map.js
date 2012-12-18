@@ -13,12 +13,12 @@ function init() {
 	// initialize the geocoder
 	geo = new google.maps.Geocoder();
 	// set map center via user input location and other required options for the map
-	var center = new google.maps.LatLng(0, 0);
+	var center = new google.maps.LatLng(37, -96);
 	geo.geocode({ 'address':input.value }, function(r, s) {
 		if (s == google.maps.GeocoderStatus.OK)
 			center = r[0].geometry.location;
 	});
-	mapOptions = { zoom:10, center:center, mapTypeId:google.maps.MapTypeId.ROADMAP };
+	mapOptions = { zoom:3, center:center, mapTypeId:google.maps.MapTypeId.ROADMAP };
 	// create a map, listener for map location changed
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 	google.maps.event.addListener(map, 'dragend', function() { updateLocation(input); });
