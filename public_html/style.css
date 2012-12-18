@@ -1,14 +1,15 @@
 .results {
-	cursor: default;
-	display: block;
-	font-family: arial, helvetica, sans-serif;
-	font-size: 14px;
-	height: 75%;
-	padding: 5px;
-	position: relative;
-	text-align: justify;
-	top: 10px;
-	width: 50%
+   cursor: default;
+   display: block;
+   font-family: arial, helvetica, sans-serif;
+   font-size: 14px;
+   height: 75%;
+   left: 20px;
+   padding: 5px;
+   position: relative;
+   text-align: justify;
+   top: 10px;
+   width: 50%
 }
 
 .search {
@@ -97,7 +98,7 @@ body {
 #map_cont {
 	position: fixed;
 	bottom: -20px;
-	right: 5px;
+	right: 10px;
 }
 #border {
     width: 300px;

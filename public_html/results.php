@@ -66,46 +66,48 @@
 	});
 </script>
 	</head>
-	<body>
+	<body id="div-my-tabl">
 		<div class = "subHeadline"> Didn't find what you were looking for? </div>
 
 		<div class = "search">
 			<form name="user_input" action="results.php" method="get">
 				<p>
-					<div class="label"> Location:
-						<input type="text" name="location" value="<?php echo $_GET['location']?>">
-					</div>
-					<div class="label">Keyword:
-						<input type="text" name="keyword" value="<?php echo $_GET['keyword']?>">
-					</div>
-					<div class="label">Salary:
-						<select name="salary">
-							<option value=""></option>
-							<option value="30000">$30,000.00</option>
-							<option value="40000">$40,000.00</option>
-							<option value="50000">$50,000.00</option>
-							<option value="60000">$60,000.00</option>
-							<option value="70000">$70,000.00</option>
-							<option value="80000">$80,000.00</option>
-							<option value="90000">$90,000.00</option>
-							<option value="100000">$100,000.00</option>
-							<option value="125000">$125,000.00</option>
-							<option value="150000">$150,000.00</option>
-						</select>
-					</div>
-					<div class="label">Education:
-						<select name="education">
-							<option value=""></option>
-							<option value="High-School">High School</option>
-							<option value="Associate-Degree">Associate Degree</option>
-							<option value="Bachelors-Degree">Bachelors Degree</option>
-							<option value="Advanced-Degree">Advanced Degree</option>
-						</select>
-					</div>
-				</p>
-				<input type="submit" value="Search">
-			</form>
-		</div>
+				<ul>
+				  <li class="label"> Location:
+					<input type="text" name="location" value="<?php echo $_GET['location']?>">
+				  </li>
+				  <li class="label">Keyword:
+					 <input type="text" name="keyword" value="<?php echo $_GET['keyword']?>">
+				  </li>
+				  <li class="label">Salary:
+					 <select name="salary">
+						<option value=""></option>
+						<option value="30000">$30,000.00</option>
+						<option value="40000">$40,000.00</option>
+						<option value="50000">$50,000.00</option>
+						<option value="60000">$60,000.00</option>
+						<option value="70000">$70,000.00</option>
+						<option value="80000">$80,000.00</option>
+						<option value="90000">$90,000.00</option>
+						<option value="100000">$100,000.00</option>
+						<option value="125000">$125,000.00</option>
+						<option value="150000">$150,000.00</option>
+					 </select>
+				  </li>
+				  <li class="label">Education:
+					 <select name="education">
+						<option value=""></option>
+						<option value="High-School">High School</option>
+						<option value="Associate-Degree">Associate Degree</option>
+						<option value="Bachelors-Degree">Bachelors Degree</option>
+						<option value="Advanced-Degree">Advanced Degree</option>
+					 </select>
+				  </li>
+			   </ul>
+			</p>
+			<input type="submit" value="Search">
+		 </form>
+      </div>
 
 		<div class="results">
             <div id="loader"><img src="loading.gif"></div>
