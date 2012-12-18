@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<!--Load the Google Maps API with the places library.-->
 		<script src="https://maps.googleapis.com/maps/api/js?&sensor=true&libraries=places"></script>
@@ -11,7 +10,6 @@
 		<!-- load the stylesheet for formatting. -->
 		<link rel = "stylesheet" type = "text/css" href = "style.css"/>
 	</head>
-
 	<body id="div-my-tabl">
 		<div class = "subHeadline"> Didn't find what you were looking for? </div>
 
@@ -66,10 +64,8 @@
 			</div>
     	<div id="map_canvas" class="map_canvas" style="width:450px; height:450px" />
 		</div>
-
 	<br><br></body>
 </html>
-
 <!-- javascript stuff for this page to populate various fields and display results. -->
 <script>
 	// populate the Date attribute.
