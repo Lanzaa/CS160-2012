@@ -22,8 +22,8 @@ function init() {
 	// create a map, listener for map location changed
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 	google.maps.event.addListener(map, 'dragend', function() { updateLocation(input); });
-	// parse the json file.  TODO hard coded directory.
-	parseJSON("./results/results.json");
+
+    // Note the json data is parsed and markers added in the main file
 }
 
 // Update the location text field based on where the map has been moved to.
@@ -74,15 +74,6 @@ function createMarker(json) {
 			resizeMap();
 		}
 	}
-}
-
-// Parse a set of JSON objects into markers.
-function parseJSON(path) {
-	$.getJSON(path, function(data) {
-		$.each(data, function(i, item) {
-			addMarker(item);
-		});
-	});
 }
 
 // create a content string for a given json entry.

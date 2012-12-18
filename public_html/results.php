@@ -12,13 +12,9 @@
 <!-- javascript stuff for this page to populate various fields and display results. -->
 <script>
 	// populate the Date attribute.
-	today = new Date();
+	var today = new Date();
 	$("#DATE").text("Searching jobs on the date of: " + (today.getMonth() + 1) +
 		"/" + today.getDate() + "/" + today.getFullYear());
-
-	// repopulate the salary and education fields.
-	repopulate(document.getElementsByName('salary')[0], getUrlVars()['salary']);
-	repopulate(document.getElementsByName('education')[0], getUrlVars()['education']);
 
 	// taken from http://snipplr.com/view/799/get-url-variables/
 	// Read a page's GET URL variables and return them as an associative array.
@@ -40,10 +36,23 @@
 				selection.selectedIndex = i;
 	}
 
+
+	// repopulate the salary and education fields.
+    $("document").ready(function(){
+        repopulate(document.getElementsByName('salary')[0], getUrlVars()['salary']);
+        repopulate(document.getElementsByName('education')[0], getUrlVars()['education']);
+    });
+
+    var params = window.location.href.slice(window.location.href.indexOf('?') + 1);
+
+    var jsonurl = "./scrape.php?"+params;
+    alert("Testing (Colin B):Hello world"+jsonurl);
+
 	// anonymous function to put the results on the page formatted correctly.
 	$("document").ready(function() {
-		$.getJSON("./results/results.json", function(data) {
+		$.getJSON(jsonurl, function(data) {
 			$.each(data, function(i, item) {
+                addMarker(item);
 				var toappend = "<div>";
 				toappend += '<a href="' + item.link + '">' + item.title + '</a>';
 				toappend += "</div>";
@@ -52,17 +61,17 @@
 				toappend += '<div class="salary">' + (item.salary || '') + '</div>';
 				toappend += '<div class="requirements">' + (item.requirements || '') + '</div>';
 				toappend += "\n<br />\n";
-				$("#div-my-tabl").append(toappend);
+				$(".results").append(toappend);
 			});
 		});
 	});
 </script>
 	</head>
-	<body id="div-my-tabl">
+	<body>
 		<div class = "subHeadline"> Didn't find what you were looking for? </div>
 
 		<div class = "search">
-			<form name="user_input" action="scrape.php" method="get">
+			<form name="user_input" action="results.php" method="get">
 				<p>
 					<div class="label"> Location:
 						<input type="text" name="location" value="<?php echo $_GET['location']?>">

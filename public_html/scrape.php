@@ -78,22 +78,9 @@ function getDiceRequirements($page) {
 	return $requirementsArray[rand(0,sizeof($requirementsArray) - 1)];
 }
 
-// Ouput array of dictionary items to HTML
-function outputDictionaryDataToHTML($items) {
-	echo "<div>";
-	foreach ($items as $item) {
-		foreach ($item as $key => $value)
-			echo $key . ": " . $value . "<br>";
-		echo "<br>";
-	}
-	echo "</div>";
-}
-
 // Write the results to a JSON file.
-function writeToJsonFile($inputData) {
-	$fp = fopen('./results/results.json', 'w');
-	fwrite($fp, json_encode($inputData));
-	fclose($fp);
+function outputJSON($inputData) {
+    echo json_encode($inputData);
 }
 
 // Create the url to scrape monster.com
@@ -119,7 +106,6 @@ function createMonsterURL() {
 		$data["eid"] = $inEducation;
 	// convert special characters
 	$url .= convertToMonsterEncoding(http_build_query($data));
-	echo $url . "<br><br>";
 	return $url;
 }
 
@@ -194,17 +180,7 @@ getMonsterJobPostings(createMonsterURL());
 // merge job postings
 $jobPostings = mergeJobPostings($monsterJobPostings, $diceJobPostings);
 
-// output to html
-outputDictionaryDataToHTML($jobPostings);
+// output json
+outputJSON($jobPostings);
 
-// write to json file
-writeToJsonFile($jobPostings);
-
-// redirect after script completion, storing search terms for future use
-echo "<script>window.location = './results.php?";
-echo "location=".urlencode($_GET['location']);
-echo "&keyword=".urlencode($_GET['keyword']);
-echo "&salary=".urlencode($_GET['salary']);
-echo "&education=".urlencode($_GET['education']);
-echo "'</script>";
 ?>
