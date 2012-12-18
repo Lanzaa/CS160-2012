@@ -9,6 +9,54 @@
 		<script src="map.js"></script>
 		<!-- load the stylesheet for formatting. -->
 		<link rel = "stylesheet" type = "text/css" href = "style.css"/>
+<!-- javascript stuff for this page to populate various fields and display results. -->
+<script>
+	// populate the Date attribute.
+	today = new Date();
+	$("#DATE").text("Searching jobs on the date of: " + (today.getMonth() + 1) +
+		"/" + today.getDate() + "/" + today.getFullYear());
+
+	// repopulate the salary and education fields.
+	repopulate(document.getElementsByName('salary')[0], getUrlVars()['salary']);
+	repopulate(document.getElementsByName('education')[0], getUrlVars()['education']);
+
+	// taken from http://snipplr.com/view/799/get-url-variables/
+	// Read a page's GET URL variables and return them as an associative array.
+	function getUrlVars() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++) {
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+
+	// repopulate a drop down box to the given value.
+	function repopulate(selection, value) {
+		for (var i = 0; i < selection.options.length; i++)
+			if (selection.options[i].value == value)
+				selection.selectedIndex = i;
+	}
+
+	// anonymous function to put the results on the page formatted correctly.
+	$("document").ready(function() {
+		$.getJSON("./results/results.json", function(data) {
+			$.each(data, function(i, item) {
+				var toappend = "<div>";
+				toappend += '<a href="' + item.link + '">' + item.title + '</a>';
+				toappend += "</div>";
+				toappend += '<div class="company">' + (item.company || '') + '</div>';
+				toappend += '<div class="city">' + (item.city || '') + '</div>';
+				toappend += '<div class="salary">' + (item.salary || '') + '</div>';
+				toappend += '<div class="requirements">' + (item.requirements || '') + '</div>';
+				toappend += "\n<br />\n";
+				$("#div-my-tabl").append(toappend);
+			});
+		});
+	});
+</script>
 	</head>
 	<body id="div-my-tabl">
 		<div class = "subHeadline"> Didn't find what you were looking for? </div>
@@ -66,51 +114,3 @@
 		</div>
 	<br><br></body>
 </html>
-<!-- javascript stuff for this page to populate various fields and display results. -->
-<script>
-	// populate the Date attribute.
-	today = new Date();
-	$("#DATE").text("Searching jobs on the date of: " + (today.getMonth() + 1) +
-		"/" + today.getDate() + "/" + today.getFullYear());
-
-	// repopulate the salary and education fields.
-	repopulate(document.getElementsByName('salary')[0], getUrlVars()['salary']);
-	repopulate(document.getElementsByName('education')[0], getUrlVars()['education']);
-
-	// taken from http://snipplr.com/view/799/get-url-variables/
-	// Read a page's GET URL variables and return them as an associative array.
-	function getUrlVars() {
-		var vars = [], hash;
-		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-		for(var i = 0; i < hashes.length; i++) {
-			hash = hashes[i].split('=');
-			vars.push(hash[0]);
-			vars[hash[0]] = hash[1];
-		}
-		return vars;
-	}
-
-	// repopulate a drop down box to the given value.
-	function repopulate(selection, value) {
-		for (var i = 0; i < selection.options.length; i++)
-			if (selection.options[i].value == value)
-				selection.selectedIndex = i;
-	}
-
-	// anonymous function to put the results on the page formatted correctly.
-	$("document").ready(function() {
-		$.getJSON("./results/results.json", function(data) {
-			$.each(data, function(i, item) {
-				var toappend = "<div>";
-				toappend += '<a href="' + item.link + '">' + item.title + '</a>';
-				toappend += "</div>";
-				toappend += '<div class="company">' + (item.company || '') + '</div>';
-				toappend += '<div class="city">' + (item.city || '') + '</div>';
-				toappend += '<div class="salary">' + (item.salary || '') + '</div>';
-				toappend += '<div class="requirements">' + (item.requirements || '') + '</div>';
-				toappend += "\n<br />\n";
-				$("#div-my-tabl").append(toappend);
-			});
-		});
-	});
-</script>
