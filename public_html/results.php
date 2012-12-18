@@ -44,13 +44,12 @@
     });
 
     var params = window.location.href.slice(window.location.href.indexOf('?') + 1);
-
     var jsonurl = "./scrape.php?"+params;
-    alert("Testing (Colin B):Hello world"+jsonurl);
 
 	// anonymous function to put the results on the page formatted correctly.
 	$("document").ready(function() {
 		$.getJSON(jsonurl, function(data) {
+            $("#loader").hide();
 			$.each(data, function(i, item) {
                 addMarker(item);
 				var toappend = "<div>";
@@ -109,6 +108,7 @@
 		</div>
 
 		<div class="results">
+            <div id="loader"><img src="loading.gif"></div>
 			<div class="title"></div>
 		</div>
 
